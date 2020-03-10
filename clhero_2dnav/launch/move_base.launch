@@ -1,19 +1,22 @@
 <launch>
 
-   	<master auto="start"/>
- 	
- 	<!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find my_map_package)/my_map.pgm my_map_resolution"/>
+  <master auto="start"/>
 
- 	<!--- Run AMCL --> 
-    <include file="$(find amcl)/examples/amcl_omni.launch" />
+  <node name="clhero_vel_interface" pkg="clhero_2dnav" type="clhero_vel_interface" output="screen" />
 
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    	<rosparam file="$(find clhero_2dnav)/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
-    	<rosparam file="$(find clhero_2dnav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    	<rosparam file="$(find clhero_2dnav)/local_costmap_params.yaml" command="load" />
-    	<rosparam file="$(find clhero_2dnav)/global_costmap_params.yaml" command="load" /> 
-    	<rosparam file="$(find clhero_2dnav)/base_local_planner_params.yaml" command="load" />
-	</node>
+  <!-- Run the map server -->
+  <!--node name="map_server" pkg="map_server" type="map_server" args="$(find clhero_2dnav)/maps/sala_pequena.yaml"/-->
+  <!--node name="map_server" pkg="map_server" type="map_server" args="$(find clhero_2dnav)/maps/sala_pequena.yaml"/-->
 
-</launch> 
+  <!--- Run AMCL -->
+  <!--include file="$(find clhero_2dnav)/launch/my_amcl_diff.launch" /-->
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find clhero_2dnav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find clhero_2dnav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find clhero_2dnav)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find clhero_2dnav)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find clhero_2dnav)/config/base_local_planner_params.yaml" command="load" />
+  </node>
+
+</launch>

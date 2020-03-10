@@ -12,6 +12,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
   nav_msgs
+  tf
+  nav_msgs
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -137,6 +140,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(clhero_odom src/clhero_odom.cpp)
+add_executable(clhero_odom_no_tf src/clhero_odom_no_tf.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -147,12 +151,14 @@ add_executable(clhero_odom src/clhero_odom.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 add_dependencies(clhero_odom ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(clhero_odom_no_tf ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
 target_link_libraries(clhero_odom ${catkin_LIBRARIES})
+target_link_libraries(clhero_odom_no_tf ${catkin_LIBRARIES})
 
 #############
 ## Install ##
